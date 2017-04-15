@@ -32,8 +32,8 @@ class prometheus::config(
           owner   => 'root',
           group   => 'root',
           content => template('prometheus/prometheus.systemd.erb'),
-        }~>
-        exec { 'prometheus-systemd-reload':
+        }
+        ~> exec { 'prometheus-systemd-reload':
           command     => 'systemctl daemon-reload',
           path        => [ '/usr/bin', '/bin', '/usr/sbin' ],
           refreshonly => true,
@@ -44,7 +44,7 @@ class prometheus::config(
           mode    => '0555',
           owner   => 'root',
           group   => 'root',
-          content => template('prometheus/prometheus.sysv.erb')
+          content => template('prometheus/prometheus.sysv.erb'),
         }
       }
       'debian' : {
@@ -52,7 +52,7 @@ class prometheus::config(
           mode    => '0555',
           owner   => 'root',
           group   => 'root',
-          content => template('prometheus/prometheus.debian.erb')
+          content => template('prometheus/prometheus.debian.erb'),
         }
       }
       'sles' : {
@@ -60,7 +60,7 @@ class prometheus::config(
           mode    => '0555',
           owner   => 'root',
           group   => 'root',
-          content => template('prometheus/prometheus.sles.erb')
+          content => template('prometheus/prometheus.sles.erb'),
         }
       }
       'launchd' : {
@@ -68,7 +68,7 @@ class prometheus::config(
           mode    => '0644',
           owner   => 'root',
           group   => 'wheel',
-          content => template('prometheus/prometheus.launchd.erb')
+          content => template('prometheus/prometheus.launchd.erb'),
         }
       }
       default : {
@@ -83,8 +83,8 @@ class prometheus::config(
     group   => $prometheus::group,
     purge   => $purge,
     recurse => $purge,
-  } ->
-  file { 'prometheus.yaml':
+  }
+  -> file { 'prometheus.yaml':
     ensure  => present,
     path    => "${prometheus::config_dir}/prometheus.yaml",
     owner   => $prometheus::user,

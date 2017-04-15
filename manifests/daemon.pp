@@ -23,22 +23,22 @@ define prometheus::daemon (
   ) {
     case $install_method {
       'url': {
-        include staging
+        include ::staging
         $staging_file = "${name}-${version}.${download_extension}"
         $binary = "${::staging::path}/${name}-${version}.${os}-${arch}/${name}"
         staging::file { $staging_file:
           source => $real_download_url,
-        } ->
-        staging::extract { $staging_file:
+        }
+        -> staging::extract { $staging_file:
           target  => $::staging::path,
           creates => $binary,
-        } ->
-        file { $binary:
+        }
+        -> file { $binary:
             owner => 'root',
             group => 0, # 0 instead of root because OS X uses "wheel".
             mode  => '0555',
-        } ->
-        file { "${bin_dir}/${name}":
+        }
+        -> file { "${bin_dir}/${name}":
             ensure => link,
             notify => $notify_service,
             target => $binary,
@@ -101,8 +101,8 @@ define prometheus::daemon (
             owner   => 'root',
             group   => 'root',
             content => template('prometheus/daemon.systemd.erb'),
-          }~>
-          exec { "${name}-systemd-reload":
+          }
+          ~> exec { "${name}-systemd-reload":
             command     => 'systemctl daemon-reload',
             path        => [ '/usr/bin', '/bin', '/usr/sbin' ],
             refreshonly => true,

@@ -15,18 +15,18 @@ class prometheus::install
   }
   case $::prometheus::install_method {
     'url': {
-      include staging
+      include ::staging
       staging::file { "prometheus-${prometheus::version}.${prometheus::download_extension}":
         source => $prometheus::real_download_url,
-      } ->
-      file { "${::staging::path}/prometheus-${prometheus::version}":
+      }
+      -> file { "${::staging::path}/prometheus-${prometheus::version}":
         ensure => directory,
-      } ->
-      staging::extract { "prometheus-${prometheus::version}.${prometheus::download_extension}":
+      }
+      -> staging::extract { "prometheus-${prometheus::version}.${prometheus::download_extension}":
         target  => $::staging::path,
         creates => "${::staging::path}/prometheus-${prometheus::version}.${prometheus::os}-${prometheus::arch}/prometheus",
-      } ->
-      file {
+      }
+      -> file {
         "${::staging::path}/prometheus-${prometheus::version}.${prometheus::os}-${prometheus::arch}/prometheus":
           owner => 'root',
           group => 0, # 0 instead of root because OS X uses "wheel".
