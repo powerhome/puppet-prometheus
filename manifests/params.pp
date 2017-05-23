@@ -51,6 +51,14 @@ class prometheus::params {
   $node_exporter_package_name = 'node_exporter'
   $node_exporter_user = 'node-exporter'
   $node_exporter_version = '0.13.0'
+  $snmp_exporter_version = '0.3.0'
+  $snmp_exporter_group = 'snmp-exporter'
+  $snmp_exporter_user = 'snmp-exporter'
+  $snmp_exporter_package_ensure = 'latest'
+  $snmp_exporter_package_name = 'snmp_exporter'
+  $snmp_exporter_download_extension = 'tar.gz'
+  $snmp_exporter_download_url_base = 'https://github.com/prometheus/snmp_exporter/releases'
+  $snmp_exporter_extra_groups = []
   $package_ensure = 'latest'
   $package_name = 'prometheus'
   $rule_files = [ "${config_dir}/alert.rules" ]
