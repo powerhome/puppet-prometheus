@@ -111,7 +111,7 @@ class prometheus::snmp_exporter (
     default => undef,
   }
 
-  $options = " -config.file ${config_file}"
+  $options = " -config.file ${config_file} -web.listen-address 0.0.0.0:9116"
 
   # SNMP exporter configuration
   file { $config_file:
