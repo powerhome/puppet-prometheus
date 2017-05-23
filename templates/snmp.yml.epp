@@ -3,7 +3,7 @@ scrape_configs:
     static_configs:
       - targets:
       <% $prometheus::snmp_exporter::targets.each |$target| { -%>
-        - <%= $target %>
+        - <%= $target -%>
       <% } -%>
     metrics_path: /snmp
     params:
