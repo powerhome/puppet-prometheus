@@ -89,8 +89,10 @@ class prometheus::snmp_exporter (
   $restart_on_change    = true,
   $service_enable       = true,
   $service_ensure       = 'running',
+  $targets              = [],
   $user                 = $::prometheus::params::snmp_exporter_user,
   $version              = $::prometheus::params::snmp_exporter_version,
+  $config_file          = '/etc/prometheus/snmp.yml',
 ) inherits prometheus::params {
   # Prometheus added a 'v' on the realease name at 0.13.0
   if versioncmp ($version, '0.3.0') >= 0 {
@@ -109,7 +111,13 @@ class prometheus::snmp_exporter (
     default => undef,
   }
 
-  $options = " -config.file /etc/prometheus/snmp.yml"
+  $options = " -config.file ${config_file}"
+
+  # SNMP exporter configuration
+  file { $config_file:
+    ensure  => file,
+    content => content('prometheus/snmp.yml.epp'),
+  }
 
   prometheus::daemon { 'snmp_exporter':
     install_method     => $install_method,
