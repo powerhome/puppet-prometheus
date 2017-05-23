@@ -3,7 +3,7 @@ default:
   auth:
     community: <%= $community_string %>
   walk:
-    - RFC1213-MIB::sysName.0
+    - 1.3.6.1.2.1.1.5
   metrics:
   - name: hostname
-    oid: RFC1213-MIB::sysName.0
+    oid: 1.3.6.1.2.1.1.5
