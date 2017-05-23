@@ -109,7 +109,7 @@ class prometheus::snmp_exporter (
     default => undef,
   }
 
-  $options = ""
+  $options = " -config.file /etc/prometheus/snmp.yml"
 
   prometheus::daemon { 'snmp_exporter':
     install_method     => $install_method,
