@@ -116,7 +116,7 @@ class prometheus::snmp_exporter (
   # SNMP exporter configuration
   file { $config_file:
     ensure  => file,
-    content => content('prometheus/snmp.yml.epp'),
+    content => epp('prometheus/snmp.yml.epp'),
   }
 
   prometheus::daemon { 'snmp_exporter':
