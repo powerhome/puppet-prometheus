@@ -89,10 +89,10 @@ class prometheus::snmp_exporter (
   $restart_on_change    = true,
   $service_enable       = true,
   $service_ensure       = 'running',
-  $targets              = [],
   $user                 = $::prometheus::params::snmp_exporter_user,
   $version              = $::prometheus::params::snmp_exporter_version,
   $config_file          = '/etc/prometheus/snmp.yml',
+  $community_string     = 'public',
 ) inherits prometheus::params {
   # Prometheus added a 'v' on the realease name at 0.13.0
   if versioncmp ($version, '0.3.0') >= 0 {

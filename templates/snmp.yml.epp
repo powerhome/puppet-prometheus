@@ -1,17 +1,9 @@
-scrape_configs:
-  - job_name: 'snmp'
-    static_configs:
-      - targets:
-      <%- $prometheus::snmp_exporter::targets.each |$target| { -%>
-        - <%= $target %>
-      <%- } -%>
-    metrics_path: /snmp
-    params:
-      module: [default]
-    relabel_configs:
-      - source_labels: [__address__]
-        target_label: __param_target
-      - source_labels: [__param_target]
-        target_label: instance
-      - target_label: __address__
-        replacement: 127.0.0.1:9116
+default:
+  version: 2
+  auth:
+    community: <%= $community_string %>
+  walk:
+    - RFC1213-MIB::sysName.0
+  metrics:
+  - name: hostname
+    oid: RFC1213-MIB::sysName.0
