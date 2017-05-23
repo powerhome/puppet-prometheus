@@ -141,5 +141,6 @@ class prometheus::snmp_exporter (
     service_ensure     => $service_ensure,
     service_enable     => $service_enable,
     manage_service     => $manage_service,
+    require            => File[$config_file],
   }
 }
