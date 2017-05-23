@@ -93,7 +93,7 @@ class prometheus::snmp_exporter (
   $version              = $::prometheus::params::snmp_exporter_version,
 ) inherits prometheus::params {
   # Prometheus added a 'v' on the realease name at 0.13.0
-  if versioncmp ($version, '0.13.0') >= 0 {
+  if versioncmp ($version, '0.3.0') >= 0 {
     $release = "v${version}"
   }
   else {
